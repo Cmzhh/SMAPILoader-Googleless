@@ -1,9 +1,9 @@
 {
   "sdk": {
-    "version": "8.0.403",
+    "version": "9.0.315",
     "rollForward": "latestFeature"
   },
   "msbuild-sdks": {
-    "Microsoft.NET.Sdk.IL": "8.0.0"
+    "Microsoft.NET.Sdk.IL": "9.0.17"
   }
 }

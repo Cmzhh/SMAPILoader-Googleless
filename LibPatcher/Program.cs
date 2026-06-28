@@ -32,9 +32,9 @@ partial class Program {
                     var home = GetArgOrDefault(@"C:\Program Files\dotnet\");
 
                     new LibPatcherArm64(home).Revert();
-                    new LibPatcherArm32(home).Revert();
-                    new LibPatcherX64(home).Revert();
-                    new LibPatcherX86(home).Revert();
+                    // new LibPatcherArm32(home).Revert();
+                    // new LibPatcherX64(home).Revert();
+                    // new LibPatcherX86(home).Revert();
 
                     break;
                 }
@@ -42,9 +42,9 @@ partial class Program {
                     var home = GetArgOrDefault(@"C:\Program Files\dotnet\");
 
                     new LibPatcherArm64(home).Patch();
-                    new LibPatcherArm32(home).Patch();
-                    new LibPatcherX64(home).Patch();
-                    new LibPatcherX86(home).Patch();
+                    // new LibPatcherArm32(home).Patch();
+                    // new LibPatcherX64(home).Patch();
+                    // new LibPatcherX86(home).Patch();
 
                     break;
                 }

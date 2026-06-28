@@ -13,6 +13,7 @@ internal static class SMAPIInstaller
 {
     public const string GithubOwner = "NRTnarathip";
     public const string GithubRepoName = "SMAPI-Android-1.6";
+
     public static long GetBuildCode()
     {
         try
@@ -127,7 +128,7 @@ internal static class SMAPIInstaller
 
         if (!fileName.EndsWith(".zip")) return false;
 
-        if (fileName.StartsWith("SMAPI-") || fileName.StartsWith("SMAPI_"))
+        if (fileName.Contains("SMAPI-Android"))
         {
             //check file size should less than PC
             //on PC SMAPI-4.1.10-installer-for-developers.zip
@@ -138,7 +139,7 @@ internal static class SMAPIInstaller
             var fileInfo = new FileInfo(pick.FullPath);
 
             //less than 30mb
-            return FileTool.ConvertBytesToMB(fileInfo.Length) <= 30;
+            return FileTool.ConvertBytesToMB(fileInfo.Length) <= 10;
         }
 
         return false;

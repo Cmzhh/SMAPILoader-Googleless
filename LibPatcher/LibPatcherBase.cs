@@ -6,12 +6,13 @@ using ELFSharp.ELF.Sections;
 namespace LibPatcher;
 
 abstract class LibPatcherBase<T> where T : struct, IUnsignedNumber<T> {
+	public const string DotNetVersion = "9.0.17";
+	
     public Dictionary<string, SymbolEntry<T>> MonoMethodMap { get; } = new();
     public string LibFile { get; }
 
     internal LibPatcherBase(string dotnetHome) {
-        var ver = "8.0.22";
-        LibFile = Path.Combine(dotnetHome, @$"packs\Microsoft.NETCore.App.Runtime.Mono.android-{ArchName}\{ver}\runtimes\android-{ArchName}\native\libmonosgen-2.0.so");
+        LibFile = Path.Combine(dotnetHome, @$"packs\Microsoft.NETCore.App.Runtime.Mono.android-{ArchName}\{DotNetVersion}\runtimes\android-{ArchName}\native\libmonosgen-2.0.so");
     }
 
     public void Patch() {

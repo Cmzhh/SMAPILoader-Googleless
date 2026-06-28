@@ -1,6 +1,4 @@
-﻿extern alias MonoCecilAlias;
-
-using Mono.Cecil;
+﻿using Mono.Cecil;
 
 namespace SMAPIGameLoader;
 

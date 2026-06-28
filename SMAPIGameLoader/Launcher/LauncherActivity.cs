@@ -17,7 +17,7 @@ namespace SMAPIGameLoader.Launcher;
     Theme = "@style/AppTheme",
     AlwaysRetainTaskState = true,
     LaunchMode = LaunchMode.SingleInstance,
-    ScreenOrientation = ScreenOrientation.SensorPortrait
+    ScreenOrientation = ScreenOrientation.FullSensor
 )]
 public class LauncherActivity : AppCompatActivity
 {
@@ -152,9 +152,10 @@ public class LauncherActivity : AppCompatActivity
             //set support game version
             launcherInfoLines.AppendLine($"Support Game Version: {StardewApkTool.GameVersionSupport} Or Later");
             launcherInfoLines.AppendLine("Your Game Version: " + StardewApkTool.CurrentGameVersion);
-            launcherInfoLines.AppendLine("Discord: Stardew SMAPI Thailand");
-            launcherInfoLines.AppendLine("Owner: NRTnarathip");
-			launcherInfoLines.AppendLine("Googleless Patch: IvanKr08");
+            launcherInfoLines.AppendLine("Discord: Stardew SMAPI Thailand (original)");
+            launcherInfoLines.AppendLine("Discord: Stardew SMAPI Russia (fork)");
+            launcherInfoLines.AppendLine("Developer: NRTnarathip, Eky-Team");
+            launcherInfoLines.AppendLine("Googleless Patch: IvanKr08");
 			launcherInfoLines.AppendLine($"Game Package: {StardewApkTool.CurrentPackageInfo}");
 			launcherInfoLines.AppendLine($"Split Content: {StardewApkTool.IsSplitContent}");
 			launcherInfoLines.AppendLine($"Content Apk Path: {StardewApkTool.ContentApkPath}");

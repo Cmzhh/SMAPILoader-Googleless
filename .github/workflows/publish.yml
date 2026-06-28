@@ -6,6 +6,7 @@ name: Build APK
 on:
   push:
     branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
   publish:
@@ -15,7 +16,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 9.0.315
     - name: Restore workload
       run: dotnet workload restore
     - name: Patch Mono Runtime
@@ -26,7 +27,7 @@ jobs:
       uses: actions/upload-artifact@v5.0.0
       with:
         name: Built APK
-        path: .\SMAPIGameLoader\bin\Release\net8.0-android\publish\abc.smapi.gameloader-Signed.apk
+        path: .\SMAPIGameLoader\bin\Release\net9.0-android\publish\abc.smapi.gameloader-Signed.apk
         if-no-files-found: error
         retention-days: 90
         compression-level: 0

@@ -24,7 +24,7 @@ function Invoke-Dotnet([string[]] $Arguments) {
 
 function Resolve-Mono([string] $OutputName) {
     $output = & dotnet msbuild $project @buildProperties -nologo -verbosity:quiet `
-        -t:ResolveRuntimePackAssets `
+        '-t:ProcessFrameworkReferences;ResolveFrameworkReferences;ResolveRuntimePackAssets' `
         -getProperty:NETCoreSdkVersion,NetCoreRoot,NetCoreTargetingPackRoot,RuntimeFrameworkVersion,RuntimeIdentifier,AndroidSdkDirectory `
         -getItem:ResolvedRuntimePack,RuntimePackAsset,RuntimeFramework
     if ($LASTEXITCODE -ne 0) { throw "Runtime resolution failed ($LASTEXITCODE)." }

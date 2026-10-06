@@ -14,7 +14,7 @@ $apkDirectory = Join-Path $repoRoot 'artifacts/apk'
 $selectionFile = Join-Path $evidence 'runtime-selection.json'
 $runtimeVersion = '9.0.17'
 $runtimeId = 'android-arm64'
-$buildProperties = @('-p:Configuration=Release', "-p:RuntimeIdentifier=$runtimeId", "-p:RuntimeFrameworkVersion=$runtimeVersion")
+$buildProperties = @('-p:Configuration=Release', "-p:RuntimeIdentifier=$runtimeId")
 New-Item -ItemType Directory -Path $evidence -Force | Out-Null
 
 function Invoke-Dotnet([string[]] $Arguments) {
@@ -23,10 +23,11 @@ function Invoke-Dotnet([string[]] $Arguments) {
 }
 
 function Resolve-Mono([string] $OutputName) {
-    $output = & dotnet msbuild $project @buildProperties -nologo -verbosity:quiet `
+    # Android's _ResolveAssemblies resolves runtime files in a SelfContained=true inner build.
+    $output = & dotnet msbuild $project @buildProperties -p:SelfContained=true -nologo -verbosity:quiet `
         '-t:ProcessFrameworkReferences;ResolveFrameworkReferences;ResolveRuntimePackAssets' `
-        -getProperty:NETCoreSdkVersion,NetCoreRoot,NetCoreTargetingPackRoot,RuntimeFrameworkVersion,RuntimeIdentifier,AndroidSdkDirectory `
-        -getItem:ResolvedRuntimePack,RuntimePackAsset,RuntimeFramework
+        -getProperty:NETCoreSdkVersion,NetCoreRoot,NetCoreTargetingPackRoot,RuntimeFrameworkVersion,RuntimeIdentifier,AndroidSdkDirectory,SelfContained,UseMonoRuntime `
+        -getItem:FrameworkReference,KnownFrameworkReference,RuntimePack,ResolvedRuntimePack,RuntimePackAsset,RuntimeFramework
     if ($LASTEXITCODE -ne 0) { throw "Runtime resolution failed ($LASTEXITCODE)." }
     $raw = $output -join "`n"
     $raw | Set-Content -LiteralPath (Join-Path $evidence $OutputName) -Encoding utf8

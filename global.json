@@ -1,7 +1,9 @@
 {
   "sdk": {
     "version": "9.0.315",
-    "rollForward": "latestFeature"
+    "rollForward": "disable",
+    "allowPrerelease": false,
+    "workloadVersion": "9.0.315"
   },
   "msbuild-sdks": {
     "Microsoft.NET.Sdk.IL": "9.0.17"

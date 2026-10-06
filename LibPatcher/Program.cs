@@ -51,6 +51,11 @@ partial class Program {
                 case "help":
                     Help();
                     break;
+                case "patch-file": {
+                    var library = GetArg("library file");
+                    new LibPatcherArm64(library, isLibraryFile: true).Patch();
+                    break;
+                }
                 default:
                     Console.WriteLine("Unknown action");
                     Exit(-1);
@@ -70,8 +75,9 @@ partial class Program {
         Available actions:
             help                    : help
             silent <another action> : do not wait for user input
-            patch  [dotnet home]    : patch all 8.0.22 runtime archs.
-            revert [dotnet home]    : restore all 8.0.22 runtimes from backup.
+            patch  [dotnet home]    : patch the supported 9.0.17 ARM64 runtime.
+            patch-file <library>   : patch the exact ARM64 library selected by the build.
+            revert [dotnet home]    : restore the runtime from backup.
 
         [dotnet home] is optional and defaults to "C:\Program Files\dotnet\"
 

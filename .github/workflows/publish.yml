@@ -11,24 +11,40 @@ on:
 jobs:
   publish:
     runs-on: windows-latest
+    timeout-minutes: 60
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.315
-    - name: Restore workload
-      run: dotnet workload restore
+    - name: Install Android workload
+      run: dotnet workload install android
+    - name: Inspect .NET and runtime locations
+      if: ${{ !cancelled() }}
+      run: ./build/Build-Apk.ps1 Inspect
+    - name: Restore Android project and resolve Mono
+      run: ./build/Build-Apk.ps1 Restore
     - name: Patch Mono Runtime
-      run: dotnet run --project LibPatcher silent patch
+      run: ./build/Build-Apk.ps1 Patch
     - name: Publish
-      run: dotnet publish ./SMAPIGameLoader
+      run: ./build/Build-Apk.ps1 Publish
+    - name: Verify APK signature and packaged Mono
+      run: ./build/Build-Apk.ps1 Verify
     - name: Upload the APK
       uses: actions/upload-artifact@v5.0.0
       with:
         name: Built APK
-        path: .\SMAPIGameLoader\bin\Release\net9.0-android\publish\abc.smapi.gameloader-Signed.apk
+        path: artifacts/apk/*-Signed.apk
         if-no-files-found: error
         retention-days: 90
         compression-level: 0
+    - name: Upload build verification
+      if: ${{ !cancelled() }}
+      uses: actions/upload-artifact@v5.0.0
+      with:
+        name: Build verification
+        path: artifacts/build-evidence/
+        if-no-files-found: error
+        retention-days: 90
         
